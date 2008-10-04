@@ -16,7 +16,7 @@ function dgReadyState(fn){ //dom is ready for interaction (IE)
 }
 
 /* Objeto */
-dgCidadesEstados = function(cidade,estado) {this.set(cidade,estado)}
+dgCidadesEstados = function(cidade,estado) {this.set(cidade,estado);this.start();}
 dgCidadesEstados.prototype = {
   estado: document.createElement('select'),
   cidade: document.createElement('select'),
@@ -40,6 +40,17 @@ dgCidadesEstados.prototype = {
       opt.value = itens[i];
       opts.appendChild(opt);
     }
+  },
+  start: function () {
+    while (this.estado.childNodes.length)
+      this.estado.removeChild(this.estado.firstChild);
+    for (var i=0;i<this.estados;i++) {
+      var opt = document.createElement('option');
+      opt.appendChild(document.createTextNode(unescape(this.estados[i][1])));
+      opt.value = this.estados[i][0];
+      opts.appendChild(opt);
+    }
+    
   },
   estados: [
     ['','Selecione um estado'],['AC','Acre'],['AL','Alagoas'],['AM','Amazonas'],['AP','Amapa'],['BA','Bahia'],
