@@ -33,25 +33,22 @@ dgCidadesEstados.prototype = {
     var opts = this.cidade;
     while (opts.childNodes.length)
       opts.removeChild(opts.firstChild);
-    itens.unshift('Selecione uma cidade');
-    for (var i=0;i<itens_total;i++) {
-      var opt = document.createElement('option');
-      opt.appendChild(document.createTextNode(unescape(itens[i])));
-      opt.value = itens[i];
-      opts.appendChild(opt);
-    }
+    this.addOption(opts, '', 'Selecione uma cidade');
+    for (var i=0;i<itens_total;i++)
+      this.addOption(opts, itens[i], itens[i]);
   },
   start: function () {
     var estado = this.estado
     while (estado.childNodes.length)
       estado.removeChild(estado.firstChild);
-    for (var i=0;i<this.estados.length;i++) {
-      var opt = document.createElement('option');
-      opt.appendChild(document.createTextNode(unescape(this.estados[i][1])));
-      opt.value = this.estados[i][0];
-      estado.appendChild(opt);
-    }
-    
+    for (var i=0;i<this.estados.length;i++)
+      this.addOption(estado, this.estados[i][0], this.estados[i][1]);
+  },
+  addOption: function (elm, val, text) {
+    var opt = document.createElement('option');
+    opt.appendChild(document.createTextNode(text));
+    opt.value = val;
+    elm.appendChild(opt);
   },
   estados: [
     ['','Selecione um estado'],['AC','Acre'],['AL','Alagoas'],['AM','Amazonas'],['AP','Amapa'],['BA','Bahia'],
