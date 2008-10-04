@@ -16,7 +16,11 @@ function dgReadyState(fn){ //dom is ready for interaction (IE)
 }
 
 /* Objeto */
-dgCidadesEstados = function(cidade,estado) {this.set(cidade,estado);this.start();}
+dgCidadesEstados = function(cidade,estado,init=false) {
+  this.set(cidade,estado);
+  if (init) this.start();
+}
+
 dgCidadesEstados.prototype = {
   estado: document.createElement('select'),
   cidade: document.createElement('select'),
