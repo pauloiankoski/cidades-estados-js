@@ -16,7 +16,7 @@ function dgReadyState(fn){ //dom is ready for interaction (IE)
 }
 
 /* Objeto */
-dgCidadesEstados = function(cidade,estado,init=false) {
+dgCidadesEstados = function(cidade,estado,init) {
   this.set(cidade,estado);
   if (init) this.start();
 }
