@@ -45,7 +45,7 @@ dgCidadesEstados.prototype = {
     var estado = this.estado
     while (estado.childNodes.length)
       estado.removeChild(estado.firstChild);
-    for (var i=0;i<this.estados;i++) {
+    for (var i=0;i<this.estados.length;i++) {
       var opt = document.createElement('option');
       opt.appendChild(document.createTextNode(unescape(this.estados[i][1])));
       opt.value = this.estados[i][0];
