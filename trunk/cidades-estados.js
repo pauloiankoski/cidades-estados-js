@@ -16,9 +16,57 @@ function dgReadyState(fn){ //dom is ready for interaction (IE)
 }
 
 /* Objeto */
-dgCidadesEstados = function(cidade,estado,init) {
-  this.set(cidade,estado);
-  if (init) this.start();
+var dgCidadesEstados = function(data) {
+  var defaultData = {
+    estado: false,
+    estadoVal: '',
+    cidade: false,
+    cidadeVal: '',
+    change: false
+  }
+  for (item in defaultData) {
+    if (!data[item]) {
+      data[item] = defaultData[item];
+    }
+  }
+  var keys = ['estado', 'cidade'];
+  if (data['change']) {
+    for (item in keys) {
+      item = keys[item];
+      if (data[item].tagName) {
+        var opt = document.createElement('select');
+        for (var i = 0; i < data[item].attributes.length ; i++) {
+          var attr = data[item].attributes[i];
+          if (attr.name != 'type') {
+            opt.setAttribute(attr.name, attr.value);
+          }
+        }
+        data[item].parentNode.replaceChild(opt, data[item]);
+        data[item] = opt;
+      }
+    }
+  }
+  this.set(data['estado'], data['cidade']);
+  this.start();
+  for (item in keys) {
+    item = keys[item];
+    if (this[item].getAttribute('value')) {
+      data[item+'Val'] = this[item].getAttribute('value');
+    }
+    if (data[item+'Val']) {
+      var options = this[item].options;
+      for (var i = 0; i<options.length; i++) {
+        if (options[i].tagName == 'OPTION') {
+          if (options[i].value == data[item+'Val']) {
+            options[i].selected = 'selected';
+          }
+        }
+      }
+      if (item=='estado') {
+        this.run();
+      }
+    }
+  }
 }
 
 dgCidadesEstados.prototype = {
