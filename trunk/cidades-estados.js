@@ -24,45 +24,51 @@ var dgCidadesEstados = function(data) {
     cidadeVal: '',
     change: false
   }
-  for (item in defaultData) {
-    if (!data[item]) {
-      data[item] = defaultData[item];
+  for (name in defaultData) {
+    if (!data[name]) {
+      data[name] = defaultData[name];
     }
   }
   var keys = ['estado', 'cidade'];
   if (data['change']) {
-    for (item in keys) {
-      item = keys[item];
-      if (data[item].tagName) {
+    var nome, length = keys.length;
+    for ( var a = 0; a < length; a++ ) {
+      nome = keys[a];
+      if (data[nome].tagName) {
         var opt = document.createElement('select');
-        for (var i = 0; i < data[item].attributes.length ; i++) {
-          var attr = data[item].attributes[i];
+        opt.disabled = null
+        for (var i = 0; i < data[nome].attributes.length ; i++) {
+          var attr = data[nome].attributes[i];
           if (attr.name != 'type') {
             opt.setAttribute(attr.name, attr.value);
           }
         }
-        data[item].parentNode.replaceChild(opt, data[item]);
-        data[item] = opt;
+        opt.size=1;
+        opt.disabled=false;
+        data[nome].parentNode.replaceChild(opt, data[nome]);
+        data[nome] = opt;
       }
     }
   }
   this.set(data['estado'], data['cidade']);
   this.start();
-  for (item in keys) {
-    item = keys[item];
-    if (this[item].getAttribute('value')) {
-      data[item+'Val'] = this[item].getAttribute('value');
+  var length = keys.length;
+  var nome;
+  for (var i =0; i < length; i++) {
+    nome = keys[i];
+    if (this[nome].getAttribute('value')) {
+      data[nome+'Val'] = this[nome].getAttribute('value');
     }
-    if (data[item+'Val']) {
-      var options = this[item].options;
+    if (data[nome+'Val']) {
+      var options = this[nome].options;
       for (var i = 0; i<options.length; i++) {
         if (options[i].tagName == 'OPTION') {
-          if (options[i].value == data[item+'Val']) {
+          if (options[i].value == data[nome+'Val']) {
             options[i].selected = 'selected';
           }
         }
       }
-      if (item=='estado') {
+      if (nome=='estado') {
         this.run();
       }
     }
